@@ -47,20 +47,22 @@ namespace VentaLibrosVirtual.Controllers
                 return BadRequest(err);
             }
         }
-        
+
+        [Authorize(Roles = "Admin")]
         [HttpPost("crear")]
         public async Task<ActionResult<UserToken>> CrearUsuario([FromBody] UserInfo model)
         {
             try
             {
-                     var usuario = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+
+            var usuario = new ApplicationUser() { UserName = model.Email, Email = model.Email };
             var result = await _userManager.CreateAsync(usuario, model.Password);
             if(result.Succeeded)
             {
                 return await BuildToken(usuario);
             } else
             {
-                return BadRequest(result.Errors);
+                return StatusCode(500,result.Errors);
             }
 
             }

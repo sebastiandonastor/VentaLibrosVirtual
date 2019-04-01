@@ -1,5 +1,6 @@
 ﻿using Business.Interfaces;
 using DAL.SQL;
+using Persistence.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +11,7 @@ namespace Persistence.Generic
     public class UnitOfWork : IUnitOfWork,IDisposable
     {
         private readonly TiendaDbContext _dbContext;
+
 
         public async Task<int> CompleteAsync()
 		{
@@ -25,6 +27,10 @@ namespace Persistence.Generic
         {
             //Todos los repositorios aca papa;
             _dbContext = dbContext;
+            Libros = new LibroRepository(_dbContext);
         }
+
+           public ILibroRepository Libros {get; private set; }
+
     }
 }

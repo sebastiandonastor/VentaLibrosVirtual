@@ -9,5 +9,7 @@ namespace Business.Interfaces
     {
           Task<int> CompleteAsync();
           void Dispose();
+
+        ILibroRepository Libros { get; }
     }
 }

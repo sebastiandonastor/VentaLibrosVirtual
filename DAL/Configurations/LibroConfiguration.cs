@@ -12,6 +12,16 @@ namespace DAL.Configurations
         public void Configure(EntityTypeBuilder<Libro> builder)
         {
             builder.ToTable("Libros");
+
+            builder.Property(l => l.FechaCreacion)
+                .HasDefaultValue(DateTime.Now);
+
+            builder.Property(l => l.Titulo)
+                .IsRequired();
+
+            builder.Property(l => l.Stock)
+                .IsRequired();
+
             builder.HasKey(l => l.Id);
         }
     }
