@@ -1,4 +1,5 @@
-﻿using Entities.Entities;
+﻿using DAL.Configurations;
+using Entities.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,5 +14,30 @@ namespace DAL.SQL
         {
 
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+
+            builder.ApplyConfiguration(new AutorConfiguration());
+            builder.ApplyConfiguration(new LibroConfiguration());
+            builder.ApplyConfiguration(new AutoresLibrosConfiguration());
+            builder.ApplyConfiguration(new GeneroConfiguration());
+            builder.ApplyConfiguration(new GenerosLibrosConfiguration());
+            builder.ApplyConfiguration(new CompraConfiguration());
+            builder.ApplyConfiguration(new CompraLibroConfiguration());
+            builder.ApplyConfiguration(new DetalleUsuarioConfiguration());
+
+            base.OnModelCreating(builder);
+        }
+
+
+        public DbSet<Autor> Autores { get; set; }
+        public DbSet<Libro> Libros { get; set; }
+        public DbSet<AutoresLibros> AutoresLibros { get; set; }
+        public DbSet<Genero> Generos { get; set; }
+        public DbSet<GenerosLibros> GenerosLibros { get; set; }
+        public DbSet<Compra> Compras { get; set; }
+        public DbSet<ComprasLibros> ComprasLibros { get; set; }
+        public DbSet<DetalleUsuario> DetallesUsuario { get; set; }
     }
 }

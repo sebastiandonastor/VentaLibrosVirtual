@@ -4,14 +4,16 @@ using DAL.SQL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(TiendaDbContext))]
-    partial class TiendaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190331221826_agregandoCompras")]
+    partial class agregandoCompras
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,32 +126,6 @@ namespace DAL.Migrations
                     b.HasIndex("IdUsuario");
 
                     b.ToTable("Compras");
-                });
-
-            modelBuilder.Entity("Entities.Entities.ComprasLibros", b =>
-                {
-                    b.Property<int>("IdCompra");
-
-                    b.Property<int>("IdLibro");
-
-                    b.Property<int>("Cantidad");
-
-                    b.HasKey("IdCompra", "IdLibro");
-
-                    b.HasIndex("IdLibro");
-
-                    b.ToTable("ComprasLibros");
-                });
-
-            modelBuilder.Entity("Entities.Entities.DetalleUsuario", b =>
-                {
-                    b.Property<string>("Id");
-
-                    b.Property<bool>("Premium");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DetallesUsuario");
                 });
 
             modelBuilder.Entity("Entities.Entities.Genero", b =>
@@ -333,27 +309,6 @@ namespace DAL.Migrations
                     b.HasOne("Entities.Entities.ApplicationUser", "Usuario")
                         .WithMany("Compras")
                         .HasForeignKey("IdUsuario");
-                });
-
-            modelBuilder.Entity("Entities.Entities.ComprasLibros", b =>
-                {
-                    b.HasOne("Entities.Entities.Compra", "Compra")
-                        .WithMany("ComprasLibros")
-                        .HasForeignKey("IdCompra")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Entities.Entities.Libro", "Libro")
-                        .WithMany("ComprasLibros")
-                        .HasForeignKey("IdLibro")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Entities.Entities.DetalleUsuario", b =>
-                {
-                    b.HasOne("Entities.Entities.ApplicationUser", "Usuario")
-                        .WithOne("DetalleUsuario")
-                        .HasForeignKey("Entities.Entities.DetalleUsuario", "Id")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Entities.Entities.GenerosLibros", b =>

@@ -7,5 +7,7 @@ namespace Entities.Entities
 {
     public class ApplicationUser : IdentityUser
     {
+        public List<Compra> Compras { get; set; }
+        public DetalleUsuario DetalleUsuario { get; set; }
     }
 }

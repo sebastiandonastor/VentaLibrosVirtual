@@ -4,14 +4,16 @@ using DAL.SQL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(TiendaDbContext))]
-    partial class TiendaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190331210707_agregandoAutor")]
+    partial class agregandoAutor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,10 +80,6 @@ namespace DAL.Migrations
 
                     b.Property<string>("Apellido");
 
-                    b.Property<DateTime>("FechaCreacion");
-
-                    b.Property<DateTime?>("FechaModificacion");
-
                     b.Property<string>("Nombre");
 
                     b.Property<string>("Seudonimo")
@@ -90,119 +88,6 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Autores");
-                });
-
-            modelBuilder.Entity("Entities.Entities.AutoresLibros", b =>
-                {
-                    b.Property<int>("IdAutor");
-
-                    b.Property<int>("IdLibro");
-
-                    b.HasKey("IdAutor", "IdLibro");
-
-                    b.HasIndex("IdLibro");
-
-                    b.ToTable("LibrosAutores");
-                });
-
-            modelBuilder.Entity("Entities.Entities.Compra", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Estado");
-
-                    b.Property<DateTime>("FechaCreacion");
-
-                    b.Property<DateTime?>("FechaModificacion");
-
-                    b.Property<string>("IdUsuario");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdUsuario");
-
-                    b.ToTable("Compras");
-                });
-
-            modelBuilder.Entity("Entities.Entities.ComprasLibros", b =>
-                {
-                    b.Property<int>("IdCompra");
-
-                    b.Property<int>("IdLibro");
-
-                    b.Property<int>("Cantidad");
-
-                    b.HasKey("IdCompra", "IdLibro");
-
-                    b.HasIndex("IdLibro");
-
-                    b.ToTable("ComprasLibros");
-                });
-
-            modelBuilder.Entity("Entities.Entities.DetalleUsuario", b =>
-                {
-                    b.Property<string>("Id");
-
-                    b.Property<bool>("Premium");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DetallesUsuario");
-                });
-
-            modelBuilder.Entity("Entities.Entities.Genero", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Estado");
-
-                    b.Property<DateTime>("FechaCreacion");
-
-                    b.Property<DateTime?>("FechaModificacion");
-
-                    b.Property<string>("Nombre");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Generos");
-                });
-
-            modelBuilder.Entity("Entities.Entities.GenerosLibros", b =>
-                {
-                    b.Property<int>("IdGenero");
-
-                    b.Property<int>("IdLibro");
-
-                    b.HasKey("IdGenero", "IdLibro");
-
-                    b.HasIndex("IdLibro");
-
-                    b.ToTable("GenerosLibros");
-                });
-
-            modelBuilder.Entity("Entities.Entities.Libro", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("FechaCreacion");
-
-                    b.Property<DateTime?>("FechaModificacion");
-
-                    b.Property<DateTime>("FechaPublicacion");
-
-                    b.Property<int>("Stock");
-
-                    b.Property<string>("Titulo");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Libros");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -313,60 +198,6 @@ namespace DAL.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("Entities.Entities.AutoresLibros", b =>
-                {
-                    b.HasOne("Entities.Entities.Autor", "Autor")
-                        .WithMany("AutoresLibros")
-                        .HasForeignKey("IdAutor")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Entities.Entities.Libro", "Libro")
-                        .WithMany("AutoresLibros")
-                        .HasForeignKey("IdLibro")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Entities.Entities.Compra", b =>
-                {
-                    b.HasOne("Entities.Entities.ApplicationUser", "Usuario")
-                        .WithMany("Compras")
-                        .HasForeignKey("IdUsuario");
-                });
-
-            modelBuilder.Entity("Entities.Entities.ComprasLibros", b =>
-                {
-                    b.HasOne("Entities.Entities.Compra", "Compra")
-                        .WithMany("ComprasLibros")
-                        .HasForeignKey("IdCompra")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Entities.Entities.Libro", "Libro")
-                        .WithMany("ComprasLibros")
-                        .HasForeignKey("IdLibro")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Entities.Entities.DetalleUsuario", b =>
-                {
-                    b.HasOne("Entities.Entities.ApplicationUser", "Usuario")
-                        .WithOne("DetalleUsuario")
-                        .HasForeignKey("Entities.Entities.DetalleUsuario", "Id")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Entities.Entities.GenerosLibros", b =>
-                {
-                    b.HasOne("Entities.Entities.Genero", "Genero")
-                        .WithMany("GenerosLibros")
-                        .HasForeignKey("IdGenero")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Entities.Entities.Libro", "Libro")
-                        .WithMany("GenerosLibros")
-                        .HasForeignKey("IdLibro")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
