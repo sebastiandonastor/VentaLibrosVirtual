@@ -14,5 +14,6 @@ namespace Entities.Entities
         public Libro Libro { get; set; }
 
         public int Cantidad { get; set; }
+        public Decimal PrecioTotal { get { return Libro.Precio * Cantidad ;}  }
     }
 }

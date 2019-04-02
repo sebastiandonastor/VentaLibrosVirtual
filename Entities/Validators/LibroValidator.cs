@@ -13,7 +13,8 @@ namespace Entities.Validators
             RuleSet("addLibro",  () => { 
                 RuleFor(l => l.Stock).NotEmpty().NotNull();
                 RuleFor(l => l.FechaPublicacion).NotEmpty().NotNull();
-                 RuleFor(l => l.Titulo).NotEmpty().NotNull();
+                RuleFor(l => l.Titulo).NotEmpty().NotNull();
+                RuleFor(l => l.Precio).NotEmpty().NotNull();
 
                 });
         }

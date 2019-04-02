@@ -28,9 +28,11 @@ namespace Persistence.Generic
             //Todos los repositorios aca papa;
             _dbContext = dbContext;
             Libros = new LibroRepository(_dbContext);
+            Autores = new AutorRepository(_dbContext);
         }
 
            public ILibroRepository Libros {get; private set; }
 
+        public IAutorRepository Autores {get; private set; }
     }
 }

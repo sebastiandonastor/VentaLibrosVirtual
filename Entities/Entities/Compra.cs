@@ -12,7 +12,7 @@ namespace Entities.Entities
         public DateTime FechaCreacion { get; set; }
         public DateTime? FechaModificacion { get; set; }
         public bool Estado { get; set; }
-
+        public Decimal MontoPagado { get; set; }
         public List<ComprasLibros> ComprasLibros { get; set; }
         public ApplicationUser Usuario { get; set; }
 

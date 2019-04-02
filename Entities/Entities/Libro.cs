@@ -10,6 +10,7 @@ namespace Entities.Entities
         public string Titulo { get; set; }
         public DateTime FechaPublicacion { get; set; }
         public int Stock { get; set; }
+        public Decimal Precio { get; set; }
 
         public DateTime FechaCreacion { get; set; }
         public DateTime? FechaModificacion { get; set; }

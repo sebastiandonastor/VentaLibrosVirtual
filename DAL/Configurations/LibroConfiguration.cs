@@ -13,8 +13,6 @@ namespace DAL.Configurations
         {
             builder.ToTable("Libros");
 
-            builder.Property(l => l.FechaCreacion)
-                .HasDefaultValue(DateTime.Now);
 
             builder.Property(l => l.Titulo)
                 .IsRequired();

@@ -11,5 +11,6 @@ namespace Business.Interfaces
           void Dispose();
 
         ILibroRepository Libros { get; }
+        IAutorRepository Autores {get;}
     }
 }

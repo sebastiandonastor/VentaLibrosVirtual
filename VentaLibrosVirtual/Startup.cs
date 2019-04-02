@@ -51,9 +51,13 @@ namespace VentaLibrosVirtual
             services
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddFluentValidation();
+               .AddFluentValidation(fv => { 
+                   fv.RegisterValidatorsFromAssemblyContaining<LibroValidator>();
+                   fv.RegisterValidatorsFromAssemblyContaining<AutorValidator>();
+                   });
 
-            services.AddTransient<IValidator<Libro>,LibroValidator>();
+
+     
 
             services.AddTransient<IUnitOfWork,UnitOfWork>();
 

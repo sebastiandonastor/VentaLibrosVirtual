@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\20190324192143_Initial.cs" />
+    <Compile Remove="Migrations\20190402024612_agregandoPrecioTotal.cs" />
   </ItemGroup>
 
   <ItemGroup>
