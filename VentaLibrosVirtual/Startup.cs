@@ -42,9 +42,9 @@ namespace VentaLibrosVirtual
         {
             services.AddDbContext<TiendaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TiendaConnection")));
 
-            services.AddIdentity<ApplicationUser,IdentityRole>()
-                .AddRoles<IdentityRole>()
-                .AddRoleManager<RoleManager<IdentityRole>>()
+            services.AddIdentity<ApplicationUser,ApplicationRole>()
+                .AddRoles<ApplicationRole>()
+                .AddRoleManager<RoleManager<ApplicationRole>>()
                 .AddEntityFrameworkStores<TiendaDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -54,7 +54,8 @@ namespace VentaLibrosVirtual
                .AddFluentValidation(fv => { 
                    fv.RegisterValidatorsFromAssemblyContaining<LibroValidator>();
                    fv.RegisterValidatorsFromAssemblyContaining<AutorValidator>();
-                   });
+                   fv.RegisterValidatorsFromAssemblyContaining<UserInfoValidator>();
+               });
 
 
      

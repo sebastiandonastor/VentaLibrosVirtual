@@ -11,7 +11,7 @@ namespace Entities.Validators
         public UserInfoValidator()
         {
             RuleSet("Logear", () => {
-                RuleFor(u => u.Email).NotEmpty().NotNull().EmailAddress();
+                RuleFor(u => u.Username).NotEmpty().NotNull();
                 RuleFor(u => u.Password).NotEmpty().NotNull().Length(6,15);
                 });
 

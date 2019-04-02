@@ -9,5 +9,10 @@ namespace Entities.Entities
     {
         public List<Compra> Compras { get; set; }
         public DetalleUsuario DetalleUsuario { get; set; }
+
+        public String Nombres { get; set; }
+        public String Apellidos { get; set; }
+
+        public ICollection<ApplicationUserRole> UserRoles { get; set; }
     }
 }

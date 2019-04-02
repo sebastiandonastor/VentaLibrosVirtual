@@ -1,5 +1,6 @@
 ﻿using DAL.Configurations;
 using Entities.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,7 +9,9 @@ using System.Text;
 
 namespace DAL.SQL
 {
-    public class TiendaDbContext : IdentityDbContext<ApplicationUser>
+    public class TiendaDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string, IdentityUserClaim<string>,
+    ApplicationUserRole, IdentityUserLogin<string>,
+    IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
         public TiendaDbContext(DbContextOptions<TiendaDbContext> options) : base(options)
         {
@@ -17,7 +20,7 @@ namespace DAL.SQL
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
+            base.OnModelCreating(builder);
             builder.ApplyConfiguration(new AutorConfiguration());
             builder.ApplyConfiguration(new LibroConfiguration());
             builder.ApplyConfiguration(new AutoresLibrosConfiguration());
@@ -26,8 +29,8 @@ namespace DAL.SQL
             builder.ApplyConfiguration(new CompraConfiguration());
             builder.ApplyConfiguration(new CompraLibroConfiguration());
             builder.ApplyConfiguration(new DetalleUsuarioConfiguration());
-
-            base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new UserRolesConfiguration());
+            
         }
 
 
@@ -39,5 +42,6 @@ namespace DAL.SQL
         public DbSet<Compra> Compras { get; set; }
         public DbSet<ComprasLibros> ComprasLibros { get; set; }
         public DbSet<DetalleUsuario> DetallesUsuario { get; set; }
+
     }
 }

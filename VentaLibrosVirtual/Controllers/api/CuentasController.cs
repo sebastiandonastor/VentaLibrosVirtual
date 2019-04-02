@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Entities.Entities;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -29,9 +30,27 @@ namespace VentaLibrosVirtual.Controllers
             SignInManager<ApplicationUser> signInManager, IConfiguration configuration
             )
         {
+           
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
+        }
+
+
+        [HttpGet]
+        [Route("AllRoles")]
+        public async Task<ActionResult> GetRoles()
+        {
+            try
+            {
+                var usuarios = await _userManager.Users.ToListAsync();
+                return Ok();
+            }
+            catch (Exception err)
+            {
+
+                return BadRequest(err);
+            }
         }
 
         [HttpGet]
@@ -39,7 +58,8 @@ namespace VentaLibrosVirtual.Controllers
         {
             try
             {
-                return Ok(await _userManager.Users.ToListAsync());
+                var usuarios = await _userManager.Users.ToListAsync();
+                return Ok(usuarios.Select(u => new { u.Nombres, u.Apellidos, u.Email, u.UserName, u.Id }));
             }
             catch (Exception err)
             {
@@ -50,12 +70,12 @@ namespace VentaLibrosVirtual.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost("crear")]
-        public async Task<ActionResult<UserToken>> CrearUsuario([FromBody] UserInfo model)
+        public async Task<ActionResult<UserToken>> CrearUsuario([FromBody] RegisterInfo model)
         {
             try
             {
 
-            var usuario = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var usuario = new ApplicationUser() { UserName = model.Email, Email = model.Email, Apellidos = model.Apellidos, Nombres = model.Nombres };
             var result = await _userManager.CreateAsync(usuario, model.Password);
             if(result.Succeeded)
             {
@@ -75,16 +95,16 @@ namespace VentaLibrosVirtual.Controllers
         }
 
         [HttpPost("logear")]
-        public async Task<ActionResult<UserToken>> LogearUsuario([FromBody] UserInfo model)
+        public async Task<ActionResult<UserToken>> LogearUsuario([CustomizeValidator(RuleSet = "Logear")][FromBody] UserInfo model)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.Email,model.Password, isPersistent: true, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(model.Username,model.Password, isPersistent: true, lockoutOnFailure: false);
             if(result.Succeeded)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
+                var user = await _userManager.FindByNameAsync(model.Username);
                 return await BuildToken(user);
             } else
             {
-                return BadRequest(result);
+                return BadRequest("Username o passwordd incorrect");
             }
         }
 
@@ -139,8 +159,8 @@ namespace VentaLibrosVirtual.Controllers
 
         }
 
-
-          [HttpPost("AddUserToRole")]
+        [Authorize(Roles = "Admin")]
+        [HttpPost("AddUserToRole")]
         public async Task<ActionResult> AddUserToRole(JObject data)
         {
             var nombre = data["role"].ToString();
@@ -153,5 +173,7 @@ namespace VentaLibrosVirtual.Controllers
             var result = await _userManager.AddToRoleAsync(user,nombre);
             return Ok(result);
         }
+
+        
     }
 }

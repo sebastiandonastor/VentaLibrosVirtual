@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class Initial : Migration
+    public partial class heehe : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,11 +40,64 @@ namespace DAL.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Nombres = table.Column<string>(nullable: true),
+                    Apellidos = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Autores",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(nullable: true),
+                    Apellido = table.Column<string>(nullable: true),
+                    Seudonimo = table.Column<string>(nullable: false),
+                    FechaCreacion = table.Column<DateTime>(nullable: false),
+                    FechaModificacion = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Autores", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Generos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(nullable: true),
+                    Estado = table.Column<bool>(nullable: false),
+                    FechaCreacion = table.Column<DateTime>(nullable: false),
+                    FechaModificacion = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Generos", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Libros",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Titulo = table.Column<string>(nullable: false),
+                    FechaPublicacion = table.Column<DateTime>(nullable: false),
+                    Stock = table.Column<int>(nullable: false),
+                    Precio = table.Column<decimal>(nullable: false),
+                    FechaCreacion = table.Column<DateTime>(nullable: false),
+                    FechaModificacion = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Libros", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -153,6 +206,120 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Compras",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    IdUsuario = table.Column<string>(nullable: true),
+                    FechaCreacion = table.Column<DateTime>(nullable: false),
+                    FechaModificacion = table.Column<DateTime>(nullable: true),
+                    Estado = table.Column<bool>(nullable: false),
+                    MontoPagado = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Compras", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Compras_AspNetUsers_IdUsuario",
+                        column: x => x.IdUsuario,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DetallesUsuario",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Premium = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DetallesUsuario", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DetallesUsuario_AspNetUsers_Id",
+                        column: x => x.Id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GenerosLibros",
+                columns: table => new
+                {
+                    IdGenero = table.Column<int>(nullable: false),
+                    IdLibro = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GenerosLibros", x => new { x.IdGenero, x.IdLibro });
+                    table.ForeignKey(
+                        name: "FK_GenerosLibros_Generos_IdGenero",
+                        column: x => x.IdGenero,
+                        principalTable: "Generos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GenerosLibros_Libros_IdLibro",
+                        column: x => x.IdLibro,
+                        principalTable: "Libros",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LibrosAutores",
+                columns: table => new
+                {
+                    IdAutor = table.Column<int>(nullable: false),
+                    IdLibro = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LibrosAutores", x => new { x.IdAutor, x.IdLibro });
+                    table.ForeignKey(
+                        name: "FK_LibrosAutores_Autores_IdAutor",
+                        column: x => x.IdAutor,
+                        principalTable: "Autores",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LibrosAutores_Libros_IdLibro",
+                        column: x => x.IdLibro,
+                        principalTable: "Libros",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ComprasLibros",
+                columns: table => new
+                {
+                    IdCompra = table.Column<int>(nullable: false),
+                    IdLibro = table.Column<int>(nullable: false),
+                    Cantidad = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ComprasLibros", x => new { x.IdCompra, x.IdLibro });
+                    table.ForeignKey(
+                        name: "FK_ComprasLibros_Compras_IdCompra",
+                        column: x => x.IdCompra,
+                        principalTable: "Compras",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ComprasLibros_Libros_IdLibro",
+                        column: x => x.IdLibro,
+                        principalTable: "Libros",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -191,6 +358,26 @@ namespace DAL.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Compras_IdUsuario",
+                table: "Compras",
+                column: "IdUsuario");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ComprasLibros_IdLibro",
+                table: "ComprasLibros",
+                column: "IdLibro");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GenerosLibros_IdLibro",
+                table: "GenerosLibros",
+                column: "IdLibro");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LibrosAutores_IdLibro",
+                table: "LibrosAutores",
+                column: "IdLibro");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -211,7 +398,31 @@ namespace DAL.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ComprasLibros");
+
+            migrationBuilder.DropTable(
+                name: "DetallesUsuario");
+
+            migrationBuilder.DropTable(
+                name: "GenerosLibros");
+
+            migrationBuilder.DropTable(
+                name: "LibrosAutores");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Compras");
+
+            migrationBuilder.DropTable(
+                name: "Generos");
+
+            migrationBuilder.DropTable(
+                name: "Autores");
+
+            migrationBuilder.DropTable(
+                name: "Libros");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
