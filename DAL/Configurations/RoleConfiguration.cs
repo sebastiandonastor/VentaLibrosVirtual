@@ -13,8 +13,7 @@ namespace DAL.Configurations
         public void Configure(EntityTypeBuilder<ApplicationRole> builder)
         {
 
-            var rol = new ApplicationRole() { Name = "admin", NormalizedName = "ADMIN" };
-            builder.HasData(rol);
+   
         }
     }
 }

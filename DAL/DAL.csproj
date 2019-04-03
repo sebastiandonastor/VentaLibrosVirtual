@@ -8,6 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190403015727_quepasara.cs" />
+    <Compile Remove="Migrations\20190403020208_agregandoRoles.cs" />
+    <Compile Remove="Migrations\20190403020300_QuePasara.cs" />
+    <Compile Remove="Migrations\20190403021021_heehee.cs" />
+    <Compile Remove="Migrations\20190403022557_agregandoUsuario.cs" />
+    <Compile Remove="Migrations\20190403023448_addingUsuario.cs" />
+    <Compile Remove="Migrations\20190403024526_letsee.cs" />
+    <Compile Remove="Migrations\20190403024620_huehuehueeu.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkcore" Version="2.2.3" />
     <PackageReference Include="Microsoft.EntityFrameworkcore.Design" Version="2.2.3" />
     <PackageReference Include="Microsoft.EntityFrameworkcore.SqlServer" Version="2.2.3" />
