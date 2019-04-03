@@ -55,6 +55,9 @@ namespace VentaLibrosVirtual
                    fv.RegisterValidatorsFromAssemblyContaining<LibroValidator>();
                    fv.RegisterValidatorsFromAssemblyContaining<AutorValidator>();
                    fv.RegisterValidatorsFromAssemblyContaining<UserInfoValidator>();
+                   fv.RegisterValidatorsFromAssemblyContaining<RoleValidator>();
+                   fv.RegisterValidatorsFromAssemblyContaining<AutoresLibrosValidator>();
+                   fv.RegisterValidatorsFromAssemblyContaining<GeneroValidator>();
                });
 
 

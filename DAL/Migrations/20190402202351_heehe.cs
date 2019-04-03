@@ -379,16 +379,21 @@ namespace DAL.Migrations
                 table: "LibrosAutores",
                 column: "IdLibro");
 
-             migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "35f7b56e-b2c1-4796-ad27-9586cb8b138a", "c57b880e-97bb-47a9-a3fb-e74b751585fc", "admin", "ADMIN" });
+            migrationBuilder.InsertData(
+   table: "AspNetRoles",
+   columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+   values: new object[] { "35f7b56e-b2c1-4796-ad27-9586cb8b138a", "c57b880e-97bb-47a9-a3fb-e74b751585fc", "admin", "ADMIN" });
 
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Apellidos", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Nombres", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "84c4caa8-6a71-4db6-9297-178943f9035c", 0, "donastor", "fdf8afb6-1b4e-4e4d-9c0e-9bbc08e23554", "sebastiandonastor@gmail.com", false, false, null, "sebastian", null, null, "AQAAAAEAACcQAAAAEPqldEIQFeFGIbFOUr6gs9pHy1TN32Fs6csv83uFreVJduXfvYQB4bnhutLw1hAR8A==", null, false, null, false, "sdonastor" });
+                values: new object[] { "84c4caa8-6a71-4db6-9297-178943f9035c", 0, "donastor", "fdf8afb6-1b4e-4e4d-9c0e-9bbc08e23554", "sebastiandonastor@gmail.com", false, true, null, "sebastian", "SEBASTIANDONAASTOR@GMAIL.COM", "SDONASTOR", "AQAAAAEAACcQAAAAEO1f09FtWzRjvdti2w7m7LFoe1rJFMBcT0vbj3QsxrNHzNKdgU/E6bZWFREuvCSzSA==", null, false, "f62ce300-85cc-42c0-b643-e4d3d2400b9a", false, "sdonastor" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "UserId", "RoleId" },
+                values: new object[] { "84c4caa8-6a71-4db6-9297-178943f9035c", "35f7b56e-b2c1-4796-ad27-9586cb8b138a" });
 
         }
 

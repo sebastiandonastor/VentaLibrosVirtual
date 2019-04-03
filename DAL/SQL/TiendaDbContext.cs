@@ -30,6 +30,7 @@ namespace DAL.SQL
             builder.ApplyConfiguration(new CompraLibroConfiguration());
             builder.ApplyConfiguration(new DetalleUsuarioConfiguration());
             builder.ApplyConfiguration(new UserRolesConfiguration());
+            builder.ApplyConfiguration(new UserConfiguration());
             
         }
 

@@ -23,6 +23,8 @@ namespace DAL.Configurations
                 .HasForeignKey(ur => ur.UserId)
                 .IsRequired();
 
+           
+
         }
     }
 }

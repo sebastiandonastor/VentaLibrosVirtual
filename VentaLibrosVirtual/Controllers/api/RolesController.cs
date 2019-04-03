@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities.Entities;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +16,9 @@ namespace VentaLibrosVirtual.Controllers
     [ApiController]
     public class RolesController : ControllerBase
     {
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
 
-        public RolesController(RoleManager<IdentityRole> roleManage)
+        public RolesController(RoleManager<ApplicationRole> roleManage)
         {
             _roleManager = roleManage;
         }
@@ -28,14 +30,17 @@ namespace VentaLibrosVirtual.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(JObject data)
+        public async Task<ActionResult> Post([CustomizeValidator(RuleSet = "addRole")]ApplicationRole role)
         {
-            var nombre = data["role"].ToString();
+
+
+            var nombre = role.Name;
+           
             var exist = await _roleManager.RoleExistsAsync(nombre);
             if(exist) return BadRequest("Estas haciendo una pilleria!");
 
-            var rol = new IdentityRole() { Name = nombre};
-            var result = await _roleManager.CreateAsync(rol);
+           
+            var result = await _roleManager.CreateAsync(role);
             return Ok(result);
         }
 

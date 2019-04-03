@@ -68,14 +68,14 @@ namespace VentaLibrosVirtual.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
         [HttpPost("crear")]
         public async Task<ActionResult<UserToken>> CrearUsuario([FromBody] RegisterInfo model)
         {
             try
             {
 
-            var usuario = new ApplicationUser() { UserName = model.Email, Email = model.Email, Apellidos = model.Apellidos, Nombres = model.Nombres };
+            var usuario = new ApplicationUser() { UserName = model.Username, Email = model.Email, Apellidos = model.Apellidos, Nombres = model.Nombres };
             var result = await _userManager.CreateAsync(usuario, model.Password);
             if(result.Succeeded)
             {
@@ -104,7 +104,7 @@ namespace VentaLibrosVirtual.Controllers
                 return await BuildToken(user);
             } else
             {
-                return BadRequest("Username o passwordd incorrect");
+                return BadRequest(result);
             }
         }
 
@@ -159,19 +159,30 @@ namespace VentaLibrosVirtual.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
         [HttpPost("AddUserToRole")]
         public async Task<ActionResult> AddUserToRole(JObject data)
         {
-            var nombre = data["role"].ToString();
-            var id = data["id"].ToString();
+
+            try
+            {
+                var nombre = data["role"].ToString();
+                var usuario = data["usuario"].ToString();
+                var user = await _userManager.FindByNameAsync(usuario);
+                if (user == null) return NotFound($"Usuario con el nombre: {usuario} no existe");
+                var result = await _userManager.AddToRoleAsync(user, nombre);
+                return Ok(result);
+            }
+            catch (Exception err)
+            {
+                return StatusCode(500, err);
+              
+            }
+        ;
             
 
 
-            var user = await _userManager.FindByIdAsync(id);
-            if(user == null) return NotFound($"Usuario con el id: {id} no existe");
-            var result = await _userManager.AddToRoleAsync(user,nombre);
-            return Ok(result);
+         
         }
 
         

@@ -16,6 +16,7 @@
     <Compile Remove="Migrations\20190403023448_addingUsuario.cs" />
     <Compile Remove="Migrations\20190403024526_letsee.cs" />
     <Compile Remove="Migrations\20190403024620_huehuehueeu.cs" />
+    <Compile Remove="Migrations\20190403130240_addingUserRoel.cs" />
   </ItemGroup>
 
   <ItemGroup>

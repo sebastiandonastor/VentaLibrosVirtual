@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Business.Interfaces;
 using Entities.Entities;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +22,7 @@ namespace VentaLibrosVirtual.Controllers.api
             _unitOfWork = unitOfWork;
         }
 
+        [Authorize(Roles = "normal")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Libro>>> Get()
         {
