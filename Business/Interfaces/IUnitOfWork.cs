@@ -12,5 +12,17 @@ namespace Business.Interfaces
 
         ILibroRepository Libros { get; }
         IAutorRepository Autores {get;}
+
+        IAutoresLibrosRepository AutoresLibros { get; }
+        ICompraRepository Compras { get; }
+
+        ICompraLibroRepository ComprasLibros { get; }
+
+        IDetalleUsuarioRepository DetallesUsuarios { get; }
+
+        IGeneroLibroRepository GenerosLibors { get; }
+
+
+
     }
 }

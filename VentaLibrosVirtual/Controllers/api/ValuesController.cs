@@ -14,16 +14,11 @@ namespace VentaLibrosVirtual.Controllers
     public class ValuesController : ControllerBase
     {
         // GET api/values
-        [HttpGet]
-       public object Claims()
-{
-    return User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c =>
-    new
-    {
-        Type = c.Type,
-        Value = c.Value
-    });
-}
+       [HttpGet]
+       public ActionResult Get()
+        {
+            return Ok("good"); 
+        }
 
         // GET api/values/5
         [HttpGet("{id}")]

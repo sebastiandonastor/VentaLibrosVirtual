@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Entities.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Business.Interfaces
 {
-    interface ICompraLibroRepository
+    public interface ICompraLibroRepository : IBaseRepository<ComprasLibros>
     {
     }
 }

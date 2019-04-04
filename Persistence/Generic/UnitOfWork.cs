@@ -29,10 +29,26 @@ namespace Persistence.Generic
             _dbContext = dbContext;
             Libros = new LibroRepository(_dbContext);
             Autores = new AutorRepository(_dbContext);
+            AutoresLibros = new AutoresLibrosRepository(_dbContext);
+            Compras = new CompraRepository(_dbContext);
+            ComprasLibros = new CompraLibroRepository(_dbContext);
+            DetallesUsuarios = new DetalleUsuarioRepository(_dbContext);
+            GenerosLibors = new GeneroLibroRepository(_dbContext);
+
         }
 
            public ILibroRepository Libros {get; private set; }
 
         public IAutorRepository Autores {get; private set; }
+
+        public IAutoresLibrosRepository AutoresLibros { get; private set; }
+
+        public ICompraRepository Compras { get; private set; }
+
+        public ICompraLibroRepository ComprasLibros { get; private set; }
+
+        public IDetalleUsuarioRepository DetallesUsuarios { get; private set; }
+
+        public IGeneroLibroRepository GenerosLibors { get; private set; }
     }
 }

@@ -43,8 +43,11 @@ namespace VentaLibrosVirtual.Controllers
         {
             try
             {
-                var usuarios = await _userManager.Users.ToListAsync();
-                return Ok();
+                var usuarios = await _userManager.Users.Include(s => s.UserRoles).ThenInclude(ur => ur.Roles).ToListAsync();
+
+                return Ok(usuarios
+                    .Select(s => new { s.UserName, s.Nombres, s.Apellidos, s.Id, s.Email, Roles = s.UserRoles
+                    .Select(u => new { u.Roles.Name, u.RoleId}) }));
             }
             catch (Exception err)
             {
@@ -58,6 +61,7 @@ namespace VentaLibrosVirtual.Controllers
         {
             try
             {
+              
                 var usuarios = await _userManager.Users.ToListAsync();
                 return Ok(usuarios.Select(u => new { u.Nombres, u.Apellidos, u.Email, u.UserName, u.Id }));
             }
@@ -74,7 +78,7 @@ namespace VentaLibrosVirtual.Controllers
         {
             try
             {
-
+             
             var usuario = new ApplicationUser() { UserName = model.Username, Email = model.Email, Apellidos = model.Apellidos, Nombres = model.Nombres };
             var result = await _userManager.CreateAsync(usuario, model.Password);
             if(result.Succeeded)
@@ -104,7 +108,7 @@ namespace VentaLibrosVirtual.Controllers
                 return await BuildToken(user);
             } else
             {
-                return BadRequest(result);
+                return BadRequest("Usuario o contrasena incorrecta");
             }
         }
 

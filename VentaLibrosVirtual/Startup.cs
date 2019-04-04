@@ -51,6 +51,9 @@ namespace VentaLibrosVirtual
             services
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(options => {
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                })
                .AddFluentValidation(fv => { 
                    fv.RegisterValidatorsFromAssemblyContaining<LibroValidator>();
                    fv.RegisterValidatorsFromAssemblyContaining<AutorValidator>();
@@ -58,6 +61,9 @@ namespace VentaLibrosVirtual
                    fv.RegisterValidatorsFromAssemblyContaining<RoleValidator>();
                    fv.RegisterValidatorsFromAssemblyContaining<AutoresLibrosValidator>();
                    fv.RegisterValidatorsFromAssemblyContaining<GeneroValidator>();
+                   fv.RegisterValidatorsFromAssemblyContaining<GenerosLibrosValidator>();
+                   fv.RegisterValidatorsFromAssemblyContaining<CompraValidator>();
+                   fv.RegisterValidatorsFromAssemblyContaining<ComprasLibrosValidator>();
                });
 
 

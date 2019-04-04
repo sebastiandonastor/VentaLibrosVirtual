@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Entities.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Business.Interfaces
 {
-    interface IDetalleUsuarioRepository
+   public interface IDetalleUsuarioRepository : IBaseRepository<DetalleUsuario>
     {
     }
 }
