@@ -118,8 +118,10 @@ namespace VentaLibrosVirtual.Controllers
         {
             try
             {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var user = await _userManager.FindByIdAsync(userId);
+               
+               var userName = User.Identity.Name;
+     
+                var user = await _userManager.FindByNameAsync(userName);
                 var roles = await _userManager.GetRolesAsync(user);
                 return Ok(new { Usuario = new { user.Id,user.Email }, Roles = roles });
             }
@@ -135,7 +137,7 @@ namespace VentaLibrosVirtual.Controllers
             var claims = new List<Claim>(){
                 new Claim(JwtRegisteredClaimNames.Sub, model.Id),
                 new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
-                 new Claim(ClaimTypes.Name,model.Email),
+                 new Claim(ClaimTypes.Name,model.UserName),
                 new Claim(ClaimTypes.NameIdentifier,model.Id)
                     };
 

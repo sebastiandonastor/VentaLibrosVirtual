@@ -34,6 +34,7 @@ namespace Persistence.Generic
             ComprasLibros = new CompraLibroRepository(_dbContext);
             DetallesUsuarios = new DetalleUsuarioRepository(_dbContext);
             GenerosLibors = new GeneroLibroRepository(_dbContext);
+            Generos = new GeneroRepository(_dbContext);
 
         }
 
@@ -50,5 +51,7 @@ namespace Persistence.Generic
         public IDetalleUsuarioRepository DetallesUsuarios { get; private set; }
 
         public IGeneroLibroRepository GenerosLibors { get; private set; }
+
+        public IGeneroRepository Generos {get; private set; }
     }
 }

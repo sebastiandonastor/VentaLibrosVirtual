@@ -22,6 +22,8 @@ namespace Business.Interfaces
 
         IGeneroLibroRepository GenerosLibors { get; }
 
+        IGeneroRepository Generos { get; }
+
 
 
     }
