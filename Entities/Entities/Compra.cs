@@ -16,5 +16,7 @@ namespace Entities.Entities
         public List<ComprasLibros> ComprasLibros { get; set; }
         public ApplicationUser Usuario { get; set; }
 
+
+
     }
 }

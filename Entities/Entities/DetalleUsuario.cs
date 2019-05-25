@@ -10,5 +10,8 @@ namespace Entities.Entities
         public bool Premium { get; set; }
 
         public ApplicationUser Usuario { get; set; }
+
+        public bool Estado { get; set; }
+
     }
 }

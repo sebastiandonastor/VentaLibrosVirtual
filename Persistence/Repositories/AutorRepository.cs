@@ -15,5 +15,15 @@ namespace Persistence.Repositories
         }
 
         public TiendaDbContext _context {get {return context;}}
+
+        public void SoftRemove(Autor autor)
+        {
+           
+        }
+
+        public void Update(Autor autorToUpdate, Autor autor)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

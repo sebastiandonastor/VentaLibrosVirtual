@@ -14,5 +14,6 @@ namespace Entities.Entities
         public DateTime? FechaModificacion { get; set; }
 
         public List<GenerosLibros> GenerosLibros { get; set; }
+
     }
 }

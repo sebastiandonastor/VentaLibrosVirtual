@@ -15,6 +15,9 @@ namespace Entities.Entities
         public DateTime FechaCreacion { get; set; }
         public DateTime? FechaModificacion { get; set; }
 
+        public bool Estado { get; set; }
+
+
         public List<AutoresLibros> AutoresLibros { get; set; }
         public List<GenerosLibros> GenerosLibros { get; set; }
         public List<ComprasLibros> ComprasLibros { get; set; }

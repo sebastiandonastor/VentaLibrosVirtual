@@ -14,5 +14,7 @@ namespace Entities.Entities
         public String Apellidos { get; set; }
 
         public ICollection<ApplicationUserRole> UserRoles { get; set; }
+
+        public bool Estado { get; set; }
     }
 }
